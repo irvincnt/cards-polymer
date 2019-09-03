@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<dom-module id="card-bullets">
+  <template>
+    <style>
+    </style>
+    <template is="dom-repeat" items="{{bullets}}" as="bullet">
+        <li>{{bullet}}</li>
+    </template>
+  </template>
+
+  <script>
+    class CardsBullets extends Polymer.Element {
+      static get is() { return 'card-bullets'; }
+      static get properties() {
+        return {
+          bullets: {
+            type: Array,
+            value: () => {
+              return [];
+            }
+          },
+        };
+      }
+    }
+
+    window.customElements.define(CardsBullets.is, CardsBullets);
+  </script>
+</dom-module>
