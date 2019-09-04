@@ -4,6 +4,15 @@
 <dom-module id="card-bullets">
   <template>
     <style>
+      li {
+        list-style: none
+      }
+      li::before {
+        content: "- ";
+        font-size: 18px;
+        color: #22468a;
+        margin-left: -10px
+      }
     </style>
     <template is="dom-repeat" items="{{bullets}}" as="bullet">
         <li>{{bullet}}</li>
