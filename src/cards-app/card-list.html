@@ -1,6 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
 <Link rel="import" href="./card-item.html"></Link>
+<Link rel="import" href="./card-detail.html"></Link>
 
 <dom-module id="card-list">
   <template>
@@ -13,19 +17,33 @@
       }
     </style>
 
+    <app-location route="{{route}}"></app-location>
+
+    <app-route
+      route="{{route}}"
+      pattern="/:view"
+      data="{{routeData}}"
+      tail="{{subroute}}">
+    </app-route>
+
+    <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
+      <card-detail name="detail" ></card-detail>
+    </iron-pages>
+
     <div class="wrapper">
       <template is="dom-repeat" items="{{cardsData}}" as="card">
         <card-item card="{{card}}"></card-item>
       </template>
     </div>
+    <button on-click="mostrarRoute">route a consola</button>
+    <button on-click="cambiarRoute">ir a detalle</button>
   </template>
-
-
   <script>
     class CardList extends Polymer.Element {
       static get is () {return 'card-list'; }
       static get properties() {
         return {
+          route: {type: Object},
           cardsData: {
             value: () => {
               return [
@@ -80,6 +98,13 @@
             }
           }
         };
+      }
+      mostrarRoute () {
+        console.log(this.route)
+      }
+      cambiarRoute () {
+        this.set('route.path', '/detail/');
+
       }
     }
 

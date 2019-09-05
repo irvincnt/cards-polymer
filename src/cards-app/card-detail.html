@@ -1,0 +1,21 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="card-detail">
+  <template>
+    <style>
+    </style>
+    <div class="card">
+      <div class="card-info">
+        <p class="icon eye"></p>
+        <p class="label">Detalllee</p>
+      </div>
+    </div>
+  </template>
+  <script>
+    class CardDetail extends Polymer.Element {
+      static get is() { return 'card-detail'; }
+    }
+
+    window.customElements.define(CardDetail.is, CardDetail);
+  </script>
+</dom-module>
