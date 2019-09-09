@@ -12,7 +12,6 @@
       .wrapper {
         display: flex;
         align-items: stretch;
-        background: #efefefc7;
         justify-content: space-around;
       }
     </style>
@@ -22,11 +21,10 @@
     <app-route
       route="{{route}}"
       pattern="/:view"
-      data="{{routeData}}"
-      tail="{{subroute}}">
+      data="{{routeData}}">
     </app-route>
 
-    <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
+    <iron-pages selected="[[routeData.view]]" attr-for-selected="name"  selected-attribute="visible">
       <card-detail name="detail" ></card-detail>
     </iron-pages>
 
@@ -35,8 +33,7 @@
         <card-item card="{{card}}"></card-item>
       </template>
     </div>
-    <button on-click="mostrarRoute">route a consola</button>
-    <button on-click="cambiarRoute">ir a detalle</button>
+    
   </template>
   <script>
     class CardList extends Polymer.Element {
@@ -44,6 +41,10 @@
       static get properties() {
         return {
           route: {type: Object},
+          routeData: {
+            type: Object,
+            value: ''
+          },
           cardsData: {
             value: () => {
               return [
@@ -99,12 +100,9 @@
           }
         };
       }
-      mostrarRoute () {
-        console.log(this.route)
-      }
+      
       cambiarRoute () {
         this.set('route.path', '/detail/');
-
       }
     }
 

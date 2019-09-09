@@ -63,13 +63,10 @@
       <h1 class="title">{{card.title}}</h1>
       <ul class="card-list">
         <card-bullets bullets={{card.bullets}}></card-bullets>
-        <!-- <template is="dom-repeat" items="{{card.bullets}}" as="bullet" index-as="index_bullet">
-          <li>{{bullet}}</li>
-        </template> -->
       </ul>
       <div class="card-info">
         <p class="icon eye"></p>
-        <p class="label">Quiero más información</p>
+        <a class="label" href="/detail">Quiero más información</a>
       </div>
     </div>
   </template>
