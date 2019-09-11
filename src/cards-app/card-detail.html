@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
 
 <dom-module id="card-detail">
   <template>
@@ -8,14 +10,21 @@
         background: #efefefc7;
       }
     </style>
+
     <div class="card-detail">
-        <p class="label">Detalllee</p>
+        <p class="label">Detalllee titulo {{card.title}}</p>
       </div>
     </div>
   </template>
   <script>
     class CardDetail extends Polymer.Element {
       static get is() { return 'card-detail'; }
+      static get properties() {
+        return {
+          card: Object,
+        };
+      }
+
     }
 
     window.customElements.define(CardDetail.is, CardDetail);

@@ -59,14 +59,14 @@
     </style>
 
     <div class="card">
-      <img class="photo" src="{{card.image}}" alt="">
+      <img class="photo" src="[[card.image]]" alt="">
       <h1 class="title">{{card.title}}</h1>
       <ul class="card-list">
         <card-bullets bullets={{card.bullets}}></card-bullets>
       </ul>
       <div class="card-info">
         <p class="icon eye"></p>
-        <a class="label" href="/detail">Quiero más información</a>
+        <a class="label" href="/detail/{{card.id}}" on-click="handleClick" >Quiero más información</a>
       </div>
     </div>
   </template>
@@ -77,14 +77,14 @@
       static get is () {return 'card-item'; }
       static get properties() {
         return {
-          card: {
-            type: Array,
-            value: () => {
-              return [];
-            }
-          },
+          card: Object
         };
       }
+
+      handleClick(e) {
+        this.dispatchEvent(new CustomEvent('link-click', {detail: this.card}));
+      }
+
     }
 
     window.customElements.define(CardItem.is, CardItem)

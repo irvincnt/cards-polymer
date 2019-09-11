@@ -22,17 +22,24 @@
       route="{{route}}"
       pattern="/:view"
       data="{{routeData}}">
-    </app-route>
-
+    </app-route>>
     <iron-pages selected="[[routeData.view]]" attr-for-selected="name"  selected-attribute="visible">
-      <card-detail name="detail" ></card-detail>
+      <div class="wrapper" name="">
+        <template
+          as="card"
+          is="dom-repeat" 
+          items="[[cardsData]]">
+          <card-item 
+            card="[[card]]"
+            on-link-click="openDetail">
+          </card-item>
+        </template>
+      </div>
+      <card-detail name="detail" card="[[cardDetail]]"></card-detail>
     </iron-pages>
 
-    <div class="wrapper">
-      <template is="dom-repeat" items="{{cardsData}}" as="card">
-        <card-item card="{{card}}"></card-item>
-      </template>
-    </div>
+    <button on-click="showRoute">click</button>
+    <button on-click="cambiarRoute">home</button>
     
   </template>
   <script>
@@ -45,6 +52,7 @@
             type: Object,
             value: ''
           },
+          cardDetail: Object,
           cardsData: {
             value: () => {
               return [
@@ -100,9 +108,38 @@
           }
         };
       }
+
+      static get observers() {
+        return [
+          '_routeChanged(route.*)',
+          '_viewChanged(routeData.view)'
+        ]
+      }
+
+      _routeChanged(changeRecord) {
+        console.log('Path', changeRecord);
+        if (changeRecord.path === 'path') {
+          console.log('Path changed!');
+        } else {
+          window.location = '/'
+        }
+      }
+
+      _viewChanged(view) {
+        console.log('view changed!', view);
+      }
+
+      openDetail (e) {
+        console.log('DETALLE ==>>', e.detail)
+        this.set('cardDetail', e.detail)
+      }
+
+      showRoute () {
+        this.set('route.path', '/detail');
+      }
       
       cambiarRoute () {
-        this.set('route.path', '/detail/');
+        this.set('route.path', '/');
       }
     }
 
