@@ -17,8 +17,23 @@
         display: flex;
         flex-direction: column;
       }
+      .card-photo {
+        position: relative;
+      }
       .photo {
         width: 100%;
+      }
+      .photo-overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .photo-overlay:hover {
+        opacity: 0.8;
+        background: rgba(0, 0, 0, .6);
+        transition: .5s ease;
       }
       .title {
         font-size: 27px;
@@ -59,7 +74,10 @@
     </style>
 
     <div class="card">
-      <img class="photo" src="[[card.image]]" alt="">
+      <div class="card-photo">
+        <img class="photo" src="[[card.image]]" alt="">
+        <div class="photo-overlay"></div>
+      </div>
       <h1 class="title">{{card.title}}</h1>
       <ul class="card-list">
         <card-bullets bullets={{card.bullets}}></card-bullets>

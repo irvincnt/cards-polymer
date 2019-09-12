@@ -5,14 +5,26 @@
 <dom-module id="card-detail">
   <template>
     <style>
-      :host {
-        min-height: 100vh;
-        background: #efefefc7;
+      .card {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-around;
+      }
+      
+      .card-image img {
+        height: 450px;
       }
     </style>
 
-    <div class="card-detail">
-        <p class="label">Detalllee titulo {{card.title}}</p>
+    <div class="card">
+      <div class="card-image">
+        <img src="{{card.image}}" alt="">
+      </div>
+      <div class="card-info">
+        <h1>Información</h1>
+        <br>
+        <br>
+        <h3>{{card.title}}</h3>
       </div>
     </div>
   </template>
