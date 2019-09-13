@@ -49,11 +49,13 @@
         display: flex;
         margin-top: auto;
         margin-left: 25px;
+        align-items: center;
       }
       .card-info .label {
         color: #22468a;
         font-size: 15px;
         font-weight: bold;
+        text-decoration: none;
       }
       .icon::before {
         margin-right: 7px;
@@ -84,7 +86,12 @@
       </ul>
       <div class="card-info">
         <p class="icon eye"></p>
-        <a class="label" href="/detail/{{card.id}}" on-click="handleClick" >Quiero más información</a>
+        <a 
+          class="label" 
+          on-click="handleClick"
+          href$="[[computedHref(card.id)]]">
+          Quiero más información
+        </a>
       </div>
     </div>
   </template>
@@ -98,9 +105,13 @@
           card: Object
         };
       }
-
+      
       handleClick(e) {
         this.dispatchEvent(new CustomEvent('link-click', {detail: this.card}));
+      }
+
+      computedHref (id) {
+        return `/detail/${id}`
       }
 
     }

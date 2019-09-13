@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/import-href.html">
 <Link rel="import" href="./card-item.html"></Link>
 <Link rel="import" href="./card-detail.html"></Link>
 
@@ -10,10 +11,21 @@
   <template>
     <style>
       .wrapper {
-        margin-top: 1rem;
-        display: flex;
-        align-items: stretch;
-        justify-content: space-around;
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 2rem;
+      }
+      .grid-odd{
+        display: grid;
+        grid-gap: 2rem;
+        justify-content: center;
+        grid-template-columns: repeat(3, 300px);
+      }
+      .grid-even{
+        display: grid;
+        grid-gap: 1rem;
+        justify-content: center;
+        grid-template-columns: repeat(4, 300px);
       }
     </style>
 
@@ -24,19 +36,26 @@
       pattern="/:view"
       data="{{routeData}}">
     </app-route>
-    <iron-pages selected="[[routeData.view]]" attr-for-selected="name"  selected-attribute="visible">
-      <div class="wrapper" name="">
+    <iron-pages 
+      selected="[[routeData.view]]"
+      attr-for-selected="name"  
+      selected-attribute="visible"
+      fallback-selection="404">
+      <div class$="wrapper [[compuredGrid(cardsData.length)]]" name="">
         <template
           as="card"
           is="dom-repeat" 
           items="[[cardsData]]">
-          <card-item 
+          <card-item
             card="[[card]]"
             on-link-click="openDetail">
           </card-item>
         </template>
       </div>
       <card-detail name="detail" card="[[cardDetail]]"></card-detail>
+      <div name="404">
+        <h1>404</h1>
+      </div>
     </iron-pages>
 
     <button on-click="cambiarRoute">home</button>
@@ -68,6 +87,32 @@
                     'Obtienes protecció para ti y tus acompañantes',
                     'Obtienes protecció para ti y tus acompañantes',
                   ],
+                  CoveragesAndExclusions: [
+                    {
+                      title: 'Estas son las coberturas que nosotros te ofrecemos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    },
+                    {
+                      title: 'Quedan excluidos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    },
+                    {
+                      title: 'Aplican',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    }
+                  ],
                   link: {
                     label: 'Más información',
                     link: 'google',
@@ -83,6 +128,24 @@
                     'Te prestamos un auto si el tuyo ingresa al taller mecánico',
                     'Obtienes protecció para ti y tus acompañantes',
                   ],
+                  CoveragesAndExclusions: [
+                    {
+                      title: 'Estas son las coberturas que nosotros te ofrecemos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    },
+                    {
+                      title: 'Quedan excluidos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    }
+                  ],
                   link: {
                     label: 'Más información',
                     link: 'google',
@@ -97,6 +160,90 @@
                     'Solicita asistencia las 24 hrs. desde la app BBVA S.O.S',
                     'Te prestamos un auto si el tuyo ingresa al taller mecánico',
                     'Obtienes protecció para ti y tus acompañantes',
+                  ],
+                  CoveragesAndExclusions: [
+                    {
+                      title: 'Estas son las coberturas que nosotros te ofrecemos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    },
+                    {
+                      title: 'Quedan excluidos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    }
+                  ],
+                  link: {
+                    label: 'Más información',
+                    link: 'google',
+                  } 
+                },
+                {
+                  id: 4,
+                  title: 'Seguro a terceros',
+                  image: 'https://www.bancomer.com/content/dam/public-web/bancomer/images/edufin-/persona/cards-edufin/pareja_carro_atardecer.jpg.img.2400.1552582130468.jpg',
+                  bullets: [
+                    'Protege el esquipo espacial de tu coche como rines, estéreos o bocinas',
+                    'Solicita asistencia las 24 hrs. desde la app BBVA S.O.S',
+                    'Te prestamos un auto si el tuyo ingresa al taller mecánico',
+                    'Obtienes protecció para ti y tus acompañantes',
+                  ],
+                  CoveragesAndExclusions: [
+                    {
+                      title: 'Estas son las coberturas que nosotros te ofrecemos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    },
+                    {
+                      title: 'Quedan excluidos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    }
+                  ],
+                  link: {
+                    label: 'Más información',
+                    link: 'google',
+                  } 
+                },
+                {
+                  id: 5,
+                  title: 'Seguro a terceros',
+                  image: 'https://www.bancomer.com/content/dam/public-web/bancomer/images/edufin-/persona/cards-edufin/pareja_carro_atardecer.jpg.img.2400.1552582130468.jpg',
+                  bullets: [
+                    'Protege el esquipo espacial de tu coche como rines, estéreos o bocinas',
+                    'Solicita asistencia las 24 hrs. desde la app BBVA S.O.S',
+                    'Te prestamos un auto si el tuyo ingresa al taller mecánico',
+                    'Obtienes protecció para ti y tus acompañantes',
+                  ],
+                  CoveragesAndExclusions: [
+                    {
+                      title: 'Estas son las coberturas que nosotros te ofrecemos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    },
+                    {
+                      title: 'Quedan excluidos',
+                      bullets: [
+                        'Supervivencia: al terminar el plazo contratado recibirás el ahorro para la educación de tu hijo. En este caso puede aplicar retención de impuestos con base en la Ley del ISR vigente',
+                        'Fallecimiento: si llegaras a faltar antes de cumplir tu meta, el beneficiario recibirá el 100% del ahorro establecido y adicional a esto le daremos un apoyo de $750 dólares mensuales para que tu hijo pueda continuar sus estudios hasta finalizar el plazo contratado',
+                        'Desempleo: si pierdes tu empleo por alguna causa injustificada, te pagamos el 5% del monto contratado, con lo que podrás solventar algunos gastos y continuar con tu ahorro'
+                      ]
+                    }
                   ],
                   link: {
                     label: 'Más información',
@@ -119,11 +266,16 @@
         if (changeRecord.base.path !== '/') {
           this.currentCard(changeRecord.base.path)
         }
+
       }
 
       currentCard(path) {
         let id = path.replace(/\D/g,'');
         let currenCard = this.cardsData.find(card => card.id === Number(id))
+
+        if (!currenCard) {
+          this.set('route.path', '/404');
+        }
         this.set('cardDetail', currenCard)
       }
 
@@ -133,6 +285,10 @@
       
       cambiarRoute () {
         this.set('route.path', '/');
+      }
+
+      compuredGrid (cardsLength) {
+        return `grid-${cardsLength % 2 == 0 ? 'even' : 'odd'}`
       }
     }
 
