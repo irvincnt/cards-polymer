@@ -32,7 +32,7 @@
       .card-bullets {
         width: 45%;
       }
-      .accordionItem {
+      .accordion {
         margin-bottom: 1rem;
         background: hsla(153, 48%, 49%, .1);
         padding: 1em;
@@ -40,8 +40,14 @@
         color: hsl(162, 76%, 32%);
         border-radius: 5px;
       }
-      .card-bullets-content {
-        background-color: red;
+      .show-content {
+        display: block
+      }
+      .hide-content {
+        display: none
+      }
+      .accordionItem-b {
+        border: 1px solid red
       }
     </style>
 
@@ -55,17 +61,19 @@
           as="CaE"
           is="dom-repeat"
           items="[[card.CoveragesAndExclusions]]">
-          <details class="accordionItem" on-click="toggleSelection">
-            <summary>[[CaE.title]] - # [[index]]</summary>
-            <div class="card-bullets-content">
-                <template
+          <div
+            class="accordion"
+            on-click="setItem">
+            <h3 class="accordion-header">[[CaE.title]]</h3>
+            <div class$="{{_showDetail(selectedItem,index)}}">
+              <template
                 as="bullets"
                 is="dom-repeat"
                 items="[[CaE.bullets]]">
                 <p> - [[bullets]]</p>
               </template>
             </div>
-          </details>
+          </div>
         </template>
       </div>
       <div class="card-info">
@@ -80,17 +88,20 @@
       static get properties() {
         return {
           card: Object,
+          selectedItem: {
+            type: Number,
+            value: -1
+          },
         };
       }
 
-      toggleSelection(e) {
-        var items = this.shadowRoot.querySelectorAll(".accordionItem")
-        items.forEach((details) => {
-          details.setAttribute("class", "accordionItem");
-          details.removeAttribute('open')
-        })
+      setItem(e) {
+        const {index} = e.model
+        this.set('selectedItem', index)
+      }
 
-        items[e.model.__data.index].setAttribute("class", "accordionItem");
+      _showDetail(selectedItem,index) {
+        return (selectedItem === index) ? 'show-content' : 'hide-content';
       }
     }
 
